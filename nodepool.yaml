@@ -1,0 +1,20 @@
+apiVersion: karpenter.sh/v1beta1
+kind: NodePool
+metadata:
+  name: default
+  namespace: karpenter
+spec:
+  template:
+    spec:
+      nodeClassRef:
+        name: default
+      requirements:
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values: ["t", "m", "c"]
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["spot", "on-demand"]
+  limits:
+    cpu: 100
+

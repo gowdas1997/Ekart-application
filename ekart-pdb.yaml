@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ekart-app-pdb
+  namespace: ekart-application # ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಇರುವ ಅದೇ ನೇಮ್‌ಸ್ಪೇಸ್
+spec:
+  # ಯಾವಾಗಲೂ ಕನಿಷ್ಠ 80% ಪಾಡ್‌ಗಳು ಲಭ್ಯವಿರಬೇಕು
+  minAvailable: 80% 
+  
+  # ಈ PDB ಯಾವ ಪಾಡ್‌ಗಳಿಗೆ ಅನ್ವಯವಾಗಬೇಕು?
+  selector:
+    matchLabels:
+      app: ekart-app # ನಿಮ್ಮ Deployment ನಲ್ಲಿರುವ ಅದೇ ಲೇಬಲ್

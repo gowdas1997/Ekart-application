@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ekart-configmap
+data:
+  # ನಿಮ್ಮ ಜಾವಾ ಅಪ್ಲಿಕೇಶನ್‌ನ ಕಾನ್ಫಿಗರೇಶನ್‌ಗಳು
+  # ಇದು RDS Host URL ಅನ್ನು ಸಹ ಇಡಲು ಒಂದು ಉತ್ತಮ ಜಾಗ
+  DB_HOST_URL: "ekart-db.cleicc0ckee8.ap-south-1.rds.amazonaws.com"
+  
+  # ನಿಮ್ಮ ಜಾವಾ ಅಪ್ಲಿಕೇಶನ್ ಓದುವ ಡೇಟಾಬೇಸ್ ಹೆಸರು
+  DB_NAME: "ekart"

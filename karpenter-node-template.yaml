@@ -1,0 +1,14 @@
+apiVersion: karpenter.k8s.aws/v1alpha1
+kind: EC2NodeClass
+metadata:
+  name: default
+spec:
+  amiFamily: AL2023
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: new-eks-cluster
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: new-eks-cluster
+
+

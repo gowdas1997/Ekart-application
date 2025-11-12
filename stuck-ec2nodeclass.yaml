@@ -1,0 +1,38 @@
+apiVersion: karpenter.k8s.aws/v1beta1
+kind: EC2NodeClass
+metadata:
+  annotations:
+    karpenter.k8s.aws/ec2nodeclass-hash: "9026751718408556267"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"karpenter.k8s.aws/v1beta1","kind":"EC2NodeClass","metadata":{"annotations":{},"name":"default"},"spec":{"amiFamily":"AL2","instanceProfile":"arn:aws:iam::150575194930:instance-profile/KarpenterNodeInstanceProfile-new-eks-cluster","metadataOptions":{"httpEndpoint":"enabled","httpTokens":"required"},"securityGroupSelectorTerms":[{"tags":{"karpenter.sh/discovery":"new-eks-cluster"}}],"subnetSelectorTerms":[{"tags":{"karpenter.sh/discovery":"new-eks-cluster"}}]}}
+  creationTimestamp: "2025-11-11T11:59:23Z"
+  deletionGracePeriodSeconds: 0
+  deletionTimestamp: "2025-11-12T04:16:00Z"
+  generation: 3
+  name: default
+  resourceVersion: "209072"
+  uid: b2814867-d44b-474e-8768-2a217189f0b0
+spec:
+  amiFamily: AL2
+  instanceProfile: arn:aws:iam::150575194930:instance-profile/KarpenterNodeInstanceProfile-new-eks-cluster
+  metadataOptions:
+    httpEndpoint: enabled
+    httpProtocolIPv6: disabled
+    httpPutResponseHopLimit: 2
+    httpTokens: required
+  securityGroupSelectorTerms:
+  - tags:
+      karpenter.sh/discovery: new-eks-cluster
+  subnetSelectorTerms:
+  - tags:
+      karpenter.sh/discovery: new-eks-cluster
+status:
+  instanceProfile: arn:aws:iam::150575194930:instance-profile/KarpenterNodeInstanceProfile-
+  securityGroups:
+  - id: sg-09273ee9e2f07fa6f
+    name: eks-remoteAccess-dccd38f9-a7bd-6190-2879-ac490b8ab51a
+  subnets:
+  - id: subnet-0a4d2a985dc8f9f18
+    zone: ap-south-1b
+  - id: subnet-06537e1abbc34971d
+    zone: ap-south-1a
