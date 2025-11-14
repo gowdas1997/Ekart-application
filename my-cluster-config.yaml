@@ -1,0 +1,63 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  # ಈ ಹೆಸರುಗಳನ್ನು ನಿಮ್ಮ terminal variables ನಿಂದ ತೆಗೆದುಕೊಳ್ಳಿ
+  name: ${CLUSTER_NAME}
+  region: ${AWS_DEFAULT_REGION}
+  version: "${K8S_VERSION}"
+  tags:
+    karpenter.sh/discovery: ${CLUSTER_NAME}
+
+# --- 🛑 ಮುಖ್ಯ ಬದಲಾವಣೆ ಇಲ್ಲಿದೆ 🛑 ---
+# ನಿಮ್ಮ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ನೆಟ್‌ವರ್ಕ್ ವಿವರಗಳನ್ನು ಇಲ್ಲಿ ನೀಡಿ
+vpc:
+  id: "vpc-0b8ccdd1fee0ffccc"   # <-- ❗️ನಿಮ್ಮ VPC ID ಇಲ್ಲಿ ಹಾಕಿ
+  subnets:
+    private: # Karpenter ನೋಡ್‌ಗಳಿಗಾಗಿ ನಿಮ್ಮ Private Subnets
+      ap-south-1a: # Availability Zone
+        id: "subnet-06537e1abbc34971d" # <-- ❗️ನಿಮ್ಮ Private Subnet A
+      ap-south-1b: # Availability Zone
+        id: "subnet-0a4d2a985dc8f9f18" # <-- ❗️ನಿಮ್ಮ Private Subnet B
+      # (ನಿಮಗೆ ಬೇಕಾದಷ್ಟು AZ ಗಳು ಮತ್ತು Subnet ಗಳನ್ನು ಸೇರಿಸಬಹುದು)
+    
+    public: # EKS ಕಂಟ್ರೋಲ್ ಪ್ಲೇನ್‌ಗೆ Public Subnets (ಬೇಕಿದ್ದರೆ)
+      ap-south-1a:
+        id: "subnet-045ddc37fb6c8797b"
+      ap-south-1b:
+        id: "subnet-032b6977f44494eb6"
+# --- ------------------------ ---
+
+iam:
+  withOIDC: true
+  podIdentityAssociations:
+  - namespace: "${KARPENTER_NAMESPACE}"
+    serviceAccountName: karpenter
+    roleName: ${CLUSTER_NAME}-karpenter
+    permissionPolicyARNs:
+    - arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:policy/KarpenterControllerPolicy-${CLUSTER_NAME}
+
+iamIdentityMappings:
+- arn: "arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:role/KarpenterNodeRole-${CLUSTER_NAME}"
+  username: system:node:{{EC2PrivateDNSName}}
+  groups:
+  - system:bootstrappers
+  - system:nodes
+
+managedNodeGroups:
+- instanceType: t3.medium
+  amiFamily: AmazonLinux2023
+  name: ${CLUSTER_NAME}-ng
+  privateNetworking: true
+  desiredCapacity: 2
+  minSize: 1
+  maxSize: 10
+  subnets:
+    - "subnet-06537e1abbc34971d"
+    - "subnet-0a4d2a985dc8f9f18"
+  securityGroups:
+    attachIDs:
+      - "sg-08196272edcfe7ac9"  
+
+addons:
+- name: eks-pod-identity-agent

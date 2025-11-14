@@ -2,15 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ekart-service
-  # annotations: <-- ಈ ವಿಭಾಗವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ತೆಗೆದುಹಾಕಲಾಗಿದೆ (delete)
 spec:
-  # ಬದಲಾವಣೆ: LoadBalancer ಬದಲಿಗೆ NodePort
   type: NodePort
   selector:
-    app: ekart  # (ಇದು deployment ನಲ್ಲಿರುವ label ಗೆ ಹೊಂದಬೇಕು)
+    app: ekart
   ports:
   - protocol: TCP
-    # Ingress ಈ ಪೋರ್ಟ್‌ಗೆ ಟ್ರಾಫಿಕ್ ಕಳುಹಿಸುತ್ತದೆ
-    port: 8070
-    # ಪಾಡ್‌ನ (container) ಪೋರ್ಟ್
+    port: 80
     targetPort: 8070
+

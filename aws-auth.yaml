@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::150575194930:role/eks-node-group-role
+      username: system:node:{{EC2PrivateDNSName}}
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      # If you intend to run Windows workloads, the kube-proxy group should be specified.
+      # For more information, see https://github.com/aws/karpenter/issues/5099
+      # - eks:kube-proxy-windows
+      rolearn: arn:aws:iam::150575194930:role/KarpenterNodeRole-demo-cluster
+      username: system:node:{{EC2PrivateDNSName}}
+
+
+      
+
