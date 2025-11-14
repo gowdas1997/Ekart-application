@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ekart-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ekart
+  template:
+    metadata:
+      labels:
+        app: ekart
+    spec:
+      containers:
+      - name: ekart-container
+        image: "150575194930.dkr.ecr.ap-south-1.amazonaws.com/ekart-app:latest"
+        ports:
+        - containerPort: 8070
+        
+        
