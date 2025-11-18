@@ -1,0 +1,24 @@
+# remote-write-values.yaml
+
+prometheus:
+  prometheusSpec:
+
+    # Remote Write ಸಂರಚನೆ (Configuration)
+    remoteWrite:
+      - url: "http://43.205.235.31:9090/api/v1/write"
+
+        # (Optional) ನಿಮ್ಮ EC2 Prometheus ಗೆ basic auth ಇದ್ದರೆ ಮಾತ್ರ ಬಳಸಿ
+        # basicAuth:
+        #   username:
+        #     name: basic-auth-secret
+        #     key: username
+        #   password:
+        #     name: basic-auth-secret
+        #     key: password
+
+# ಬೇರೆಲ್ಲವೂ default ಆಗಿ ಇರಲಿ.
+# Grafana, Alertmanager ನಮಗೆ ಇಲ್ಲಿ ಅಗತ್ಯವಿಲ್ಲ (ಬೇಕಿದ್ದರೆ enable ಮಾಡಿ)
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false

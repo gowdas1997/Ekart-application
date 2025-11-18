@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ekart-metrics-service
+  annotations:
+     service.kubernetes.io/load-balancer-class: service.k8s.aws/nlb
+     alb.networking.k8s.aws/scheme: internal
+     alb.networking.k8s.aws/subnets: subnet-0a4d2a985dc8f9f18,subnet-06537e1abbc34971d
+spec:
+  type: LoadBalancer
+  selector:
+    app: ekart
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8070
+
