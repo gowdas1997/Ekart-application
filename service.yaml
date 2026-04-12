@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: ekart-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: ekart
   ports:
   - protocol: TCP
     port: 80
     targetPort: 8070
-
