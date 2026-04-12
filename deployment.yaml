@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ekart-container
-        image: asia-south1-docker.pkg.dev/leafy-chariot-485812-k6/ekart-repo/ekart-app:latest
+        image: asia-south1-docker.pkg.dev/leafy-chariot-485812-k6/ekart-repo/ekart-app:BUILD_NUMBER
         ports:
         - containerPort: 8070
         resources:
