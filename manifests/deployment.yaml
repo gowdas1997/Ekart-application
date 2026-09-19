@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ekart-container
-        image: "150575194930.dkr.ecr.ap-south-1.amazonaws.com/ekart-app:latest"
+        image: "gowdas1997/e-kart-new-image:latest"
         ports:
         - containerPort: 8070
         
